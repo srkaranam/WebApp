@@ -31,9 +31,9 @@ jobs:
         run: nuget restore WebApplication2.sln
  
       - name: Build and Publish Web App
-        run: msbuild WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PackageLocation="\bin\Release"
+        run: msbuild WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PackageLocation="bin\Release\netcoreapp2.1\"
       - name: Upload Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
          name: published_webapp
-         path: bin\Release
+         path: bin\Release\netcoreapp2.1\
