@@ -21,6 +21,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      # setup MS Build  
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.0.2
-        
+      #  Setup Nuget for use with Actions
+      - name: Setup Nuget.exe
+        uses: Nuget/setup-nuget@v1.0.2
+      - name: Restore NuGet Packages
+        run: nuget restore WebApplication2.sln
+ 
+      - name: Build and Publish Web App
+        run: msbuild WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+ 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+         name: published_webapp
+         path: bin\Release\Publish  
